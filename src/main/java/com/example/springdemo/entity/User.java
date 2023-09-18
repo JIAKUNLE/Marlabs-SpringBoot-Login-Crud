@@ -26,12 +26,10 @@ public class User {
         this.id = id;
     }
 
-
-    public User(String username, String password, String email, Long id) {
+    public User(Long id, String username, String password) {
+        this.id = id;
         this.username = username;
         this.password = password;
-
-        this.id = id;
     }
 
     public String getUsername() {

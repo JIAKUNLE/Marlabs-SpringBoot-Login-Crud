@@ -1,7 +1,10 @@
 package com.example.springdemo.controller;
 
+import org.springframework.http.ResponseEntity;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import com.example.springdemo.service.LoginService;
 import com.example.springdemo.util.JwtUtil;
@@ -13,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -30,8 +34,18 @@ public class LoginController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+
+    @GetMapping("/index")
+    public String userIndex() {
+        return "index";
+    }
+
     @PostMapping("/login")
-    public String doLogin(HttpServletRequest request, HttpSession session) {
+    public String doLogin(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -44,14 +58,18 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String jwtToken = jwtUtil.generateToken(userDetails);
-            session.setAttribute("jwtToken", jwtToken);
+
+            // Set JWT as a cookie
+            Cookie jwtCookie = new Cookie("jwtToken", jwtToken);
+            jwtCookie.setHttpOnly(true);
+            jwtCookie.setPath("/");
+            response.addCookie(jwtCookie);
 
             return "redirect:/index";
         } else {
             return "redirect:/login?error=true";
         }
     }
-
 
 
 }

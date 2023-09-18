@@ -18,8 +18,10 @@
 
 <h2>Update User</h2>
 User ID: <input type="text" id="updateUserId"><br>
+New Username: <input type="text" id="updateUsername"><br>
 New Password: <input type="password" id="updatePassword"><br>
 <button type="button" onclick="updateUser()">Update</button>
+
 
 <h2>Delete User</h2>
 User ID: <input type="text" id="deleteUserId"><br>
@@ -62,6 +64,7 @@ User ID: <input type="text" id="deleteUserId"><br>
 
     async function updateUser() {
         const id = document.getElementById('updateUserId').value;
+        const newUsername = document.getElementById('updateUsername').value; // Get the new username
         const password = document.getElementById('updatePassword').value;
 
         const response = await fetch(`/api/users/${id}`, {
@@ -69,7 +72,7 @@ User ID: <input type="text" id="deleteUserId"><br>
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({password})
+            body: JSON.stringify({username: newUsername, password})
         });
 
         if (response.ok) {
@@ -79,6 +82,7 @@ User ID: <input type="text" id="deleteUserId"><br>
             alert('Error updating user.');
         }
     }
+
 
     async function deleteUser() {
         const id = document.getElementById('deleteUserId').value;

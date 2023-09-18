@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			width: 50%;
+			max-width: 400px;
+			margin: 50px auto;
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+
+		input[type="text"],
+		input[type="password"] {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		button[type="submit"] {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.crud-btn {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			background-color: #3498db;
+			color: #fff;
+			text-align: center;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			text-decoration: none;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1>Login</h1>
+	<form action="/login" method="post">
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username"><br><br>
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password"><br><br>
+		<button type="submit">Login</button>
+	</form>
+
+	<br>
+	<p>To add, delete, modify or check user information, please click here:</p>
+	<a class="crud-btn" href="/CRUD">Go to CRUD</a>
+</div>
+</body>
+</html>

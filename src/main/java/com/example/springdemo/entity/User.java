@@ -12,12 +12,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = true)
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private String email;
+
 
     public Long getId() {
         return id;
@@ -31,7 +30,7 @@ public class User {
     public User(String username, String password, String email, Long id) {
         this.username = username;
         this.password = password;
-        this.email = email;
+
         this.id = id;
     }
 
@@ -52,13 +51,7 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
 
 

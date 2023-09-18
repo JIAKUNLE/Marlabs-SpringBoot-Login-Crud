@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User CRUD</title>
+</head>
+<body>
+
+<h2>All Users</h2>
+<ul id="userList"></ul>
+
+<h2>Create User</h2>
+<form id="createUserForm">
+    Username: <input type="text" id="newUsername"><br>
+    Password: <input type="password" id="newPassword"><br>
+    <button type="button" onclick="createUser()">Create</button>
+</form>
+
+<h2>Update User</h2>
+User ID: <input type="text" id="updateUserId"><br>
+New Password: <input type="password" id="updatePassword"><br>
+<button type="button" onclick="updateUser()">Update</button>
+
+<h2>Delete User</h2>
+User ID: <input type="text" id="deleteUserId"><br>
+<button type="button" onclick="deleteUser()">Delete</button>
+
+<script>
+    async function fetchAllUsers() {
+        const response = await fetch('/api/users');
+        const users = await response.json();
+
+        const userList = document.getElementById('userList');
+        userList.innerHTML = '';
+
+        users.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = `ID: ${user.id}, Username: ${user.username}`;
+            userList.appendChild(li);
+        });
+    }
+
+    async function createUser() {
+        const username = document.getElementById('newUsername').value;
+        const password = document.getElementById('newPassword').value;
+
+        const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, password})
+        });
+
+        if (response.ok) {
+            alert('User created!');
+            fetchAllUsers();
+        } else {
+            alert('Error creating user.');
+        }
+    }
+
+    async function updateUser() {
+        const id = document.getElementById('updateUserId').value;
+        const password = document.getElementById('updatePassword').value;
+
+        const response = await fetch(`/api/users/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({password})
+        });
+
+        if (response.ok) {
+            alert('User updated!');
+            fetchAllUsers();
+        } else {
+            alert('Error updating user.');
+        }
+    }
+
+    async function deleteUser() {
+        const id = document.getElementById('deleteUserId').value;
+
+        const response = await fetch(`/api/users/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('User deleted!');
+            fetchAllUsers();
+        } else {
+            alert('Error deleting user.');
+        }
+    }
+
+    // Initial fetch of users
+    fetchAllUsers();
+</script>
+
+</body>
+</html>

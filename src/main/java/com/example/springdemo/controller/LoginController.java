@@ -35,7 +35,7 @@ public class LoginController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        UserDetails userDetails = loginService.getUser(username);
+        UserDetails userDetails = loginService.loadUserByUsername(username);
 
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
             Authentication authentication = authenticationManager.authenticate(

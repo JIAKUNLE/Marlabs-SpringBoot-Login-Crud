@@ -1,7 +1,8 @@
 package com.example.springdemo.config;
-JwtAuthenticationFilter
-import net.javaguides.springboot.springsecurity.service.CustomUserDetailsService;
-import net.javaguides.springboot.springsecurity.util.JwtAuthenticationFilter;
+
+import com.example.springdemo.service.LoginService;
+import com.example.springdemo.util.JwtAuthenticationFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,14 +21,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
+	private LoginService loginService;
 
 	@Autowired
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(loginService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
